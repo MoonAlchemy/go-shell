@@ -18,7 +18,7 @@ func main() {
 
 		commend, err := Reader.ReadString('\n')
 		commend = strings.TrimSpace(commend)
-		if commend == "exit\n" {
+		if commend == "exit" {
 			break
 		}
 		if err != nil {
