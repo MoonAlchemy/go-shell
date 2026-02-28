@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
@@ -16,6 +17,10 @@ func main() {
 		fmt.Print("$ ")
 
 		commend, err := Reader.ReadString('\n')
+		commend = strings.TrimSpace(commend)
+		if commend == "exit\n" {
+			break
+		}
 		if err != nil {
 			fmt.Println(err)
 			return
