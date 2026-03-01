@@ -11,7 +11,6 @@ import (
 var _ = fmt.Print
 
 func main() {
-	// TODO: Uncomment the code below to pass the first stage
 	Reader := bufio.NewReader(os.Stdin)
 	for {
 		fmt.Print("$ ")
@@ -25,6 +24,6 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		fmt.Print(commend[:len(commend)-1], ": command not found\n")
+		fmt.Print(commend, ": command not found\n")
 	}
 }
