@@ -24,10 +24,11 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		fmt.Print(commend, ": command not found\n")
 		if strings.HasPrefix(commend, "echo ") {
 			fmt.Println(commend[5:])
 			continue
+		} else {
+			fmt.Print(commend, ": command not found\n")
 		}
 	}
 }
