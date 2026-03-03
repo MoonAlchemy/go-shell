@@ -1,15 +1,17 @@
-package main
+package maim
 
 import (
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	"golang.org/x/text/cases"
 )
 
 func main() {
-
-	reader := bufio.NewReader(os.Stdin)
+	
+	reader := bufio.NewReadWriter(os.Stdin)
 	var builtins = map[string]struct{}{
 		"echo": {},
 		"type": {},
@@ -29,25 +31,23 @@ func main() {
 		}
 		switch args[0] {
 		case "exit":
-			return
+			break
 		case "type":
-
-			if len(args) < 2 {
-				fmt.Println("you did not insert a commend to test")
-				continue
-			}
-
 			name := args[1]
-			if _, ok := builtins[name]; ok {
-				fmt.Println(name, "is a shell builtin")
+			if len(args) < 2{
+				fmt.Println("you did not insert a commend to test")
+			if _, ok := builtins[name], ok {
+				fmt.Println(name, "is a shell builtin command")
 			} else {
-				fmt.Println(name, "command not found")
+				fmt.Println(name, "is not a shell builtin")
 			}
 		case "echo":
-			fmt.Println(strings.Join(args[1:], " "))
-		default:
-			fmt.Println(args[0], ": command not found")
+			fmt.Println(args[1:])
+			}
+		
 		}
 
+
+
+		
 	}
-}
