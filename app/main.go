@@ -42,7 +42,7 @@ func main() {
 			if _, ok := builtins[name]; ok {
 				fmt.Println(name, "is a shell builtin")
 			} else if path, err := exec.LookPath(name); err == nil {
-				fmt.Println(name, "is ", path)
+				fmt.Println(name, "is", path)
 			} else {
 				fmt.Println(name, "not found")
 			}
