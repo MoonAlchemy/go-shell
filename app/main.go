@@ -65,12 +65,12 @@ func main() {
 }
 
 func extcmd(args []string) error {
-	path, err := exec.LookPath(args[0])
+	_, err := exec.LookPath(args[0])
 
 	if err != nil {
 		return fmt.Errorf("%s: command not found", args[0])
 	}
-	cmd := exec.Command(path, args[1:]...)
+	cmd := exec.Command(args[0], args[1:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
