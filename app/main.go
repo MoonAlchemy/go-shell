@@ -14,6 +14,7 @@ var builtins = map[string]struct{}{
 	"exit": {},
 	"type": {},
 	"pwd":  {},
+	"cd":   {},
 }
 
 func main() {
@@ -36,6 +37,18 @@ func main() {
 		case "echo":
 			fmt.Println(strings.Join(args[1:], " "))
 
+		case "cd":
+			if len(args) < 2 {
+				fmt.Fprintln(os.Stderr, "cd: missing argument")
+				continue
+			}
+			dir := args[1]
+			if dir == "~" {
+				dir = os.Getenv("HOME")
+			}
+			if err := os.Chdir(dir); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
 		case "pwd":
 			pwd, err := os.Getwd()
 			if err != nil {
