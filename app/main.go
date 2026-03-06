@@ -13,6 +13,7 @@ var builtins = map[string]struct{}{
 	"echo": {},
 	"exit": {},
 	"type": {},
+	"pwd":  {},
 }
 
 func main() {
@@ -35,6 +36,12 @@ func main() {
 		case "echo":
 			fmt.Println(strings.Join(args[1:], " "))
 
+		case "pwd":
+			pwd, err := os.Getwd()
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
+			fmt.Printf("%s\n", pwd)
 		case "exit":
 			os.Exit(0)
 
