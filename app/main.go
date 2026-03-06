@@ -27,7 +27,7 @@ func main() {
 		}
 
 		args := strings.Fields(cmd)
-		if len(args) < 1 {
+		if len(args) == 0 {
 			continue
 		}
 
@@ -40,17 +40,17 @@ func main() {
 
 		case "type":
 			if len(args) < 2 {
-				fmt.Println(os.Stderr, "type: missing argument")
+				fmt.Fprintln(os.Stderr, "type: missing argument")
 				continue
 			}
 
 			name := args[1]
 
 			if _, ok := builtins[name]; ok {
-				fmt.Printf("%s is a shell builtin \n", name)
+				fmt.Printf("%s is a shell builtin\n", name)
 
 			} else if path, err := exec.LookPath(name); err == nil {
-				fmt.Printf("%s is %s \n", name, path)
+				fmt.Printf("%s is %s\n", name, path)
 			} else {
 				fmt.Printf("%s: not found\n", name)
 			}
