@@ -47,7 +47,7 @@ func main() {
 				dir = os.Getenv("HOME")
 			}
 			if err := os.Chdir(dir); err != nil {
-				fmt.Fprintln(os.Stderr, err)
+				fmt.Fprintf(os.Stderr, "cd: %s: No such file or directory\n", dir)
 			}
 		case "pwd":
 			pwd, err := os.Getwd()
