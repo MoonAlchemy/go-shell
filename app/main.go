@@ -108,9 +108,10 @@ func parseArgs(input string) []string {
 		} else if ch == '\'' && inQuote {
 			inQuote = false
 		} else if ch == ' ' && !inQuote {
-			// two lines:
-			args = append(args, current.String())
-			current.Reset()
+			if current.Len() > 0 {
+				args = append(args, current.String())
+				current.Reset()
+			}
 		} else {
 			current.WriteRune(ch)
 		}
