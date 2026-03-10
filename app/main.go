@@ -36,7 +36,7 @@ func main() {
 
 		switch args[0] {
 		case "echo":
-			fmt.Println(strings.Join(args[1:], " "))
+			fmt.Println(args[1:])
 
 		case "cd":
 			if len(args) < 2 {
