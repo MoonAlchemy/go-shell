@@ -23,12 +23,13 @@ func main() {
 	for {
 		fmt.Print("$ ")
 
-		cmd, err := reader.ReadString('\n')
+		input, err := reader.ReadString('\n')
 		if err != nil {
 			return
 		}
+		input = strings.TrimRight(input, "\n")
+		args := parseArgs(input)
 
-		args := strings.Fields(cmd)
 		if len(args) == 0 {
 			continue
 		}
@@ -95,4 +96,27 @@ func extcmd(args []string) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
+}
+
+func parseArgs(input string) []string {
+	var inQuote bool
+	var current strings.Builder
+	var args []string
+	for _, ch := range input {
+		if ch == '\'' && !inQuote {
+			inQuote = true
+		} else if ch == '\'' && inQuote {
+			inQuote = false
+		} else if ch == ' ' && !inQuote {
+			// two lines:
+			args = append(args, current.String())
+			current.Reset()
+		} else {
+			current.WriteRune(ch)
+		}
+	}
+	if current.Len() > 0 {
+		args = append(args, current.String())
+	}
+	return args
 }
