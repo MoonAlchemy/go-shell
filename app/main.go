@@ -106,12 +106,19 @@ func parseArgs(input string) []string {
 		doublemode = 2
 	)
 	var mode int
-
+	var escaped bool
 	var current strings.Builder
 	var args []string
 
 	for _, ch := range input {
-		if ch == '\'' && mode == normalmode {
+		if escaped {
+			current.WriteRune(ch)
+			escaped = false
+			continue
+		} else if ch == '\\' && mode == normalmode {
+			escaped = true
+			continue
+		} else if ch == '\'' && mode == normalmode {
 			mode = singlemode
 		} else if ch == '\'' && mode == singlemode {
 			mode = normalmode
