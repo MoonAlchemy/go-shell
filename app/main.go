@@ -99,15 +99,27 @@ func extcmd(args []string) error {
 }
 
 func parseArgs(input string) []string {
-	var inQuote bool
+
+	const (
+		normalmode = 0
+		singlemode = 1
+		doublemode = 2
+	)
+	var mode int
+
 	var current strings.Builder
 	var args []string
+
 	for _, ch := range input {
-		if ch == '\'' && !inQuote {
-			inQuote = true
-		} else if ch == '\'' && inQuote {
-			inQuote = false
-		} else if ch == ' ' && !inQuote {
+		if ch == '\'' && mode == normalmode {
+			mode = singlemode
+		} else if ch == '\'' && mode == singlemode {
+			mode = normalmode
+		} else if ch == '"' && mode == normalmode {
+			mode = doublemode
+		} else if ch == '"' && mode == doublemode {
+			mode = normalmode
+		} else if ch == ' ' && mode == normalmode {
 			if current.Len() > 0 {
 				args = append(args, current.String())
 				current.Reset()
