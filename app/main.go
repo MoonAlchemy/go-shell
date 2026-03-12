@@ -112,9 +112,17 @@ func parseArgs(input string) []string {
 
 	for _, ch := range input {
 		if escaped {
-			current.WriteRune(ch)
+			if mode == doublemode && (ch == '\\' || ch == '"') {
+				current.WriteRune(ch)
+			} else if mode == doublemode {
+				current.WriteRune('\\')
+				current.WriteRune(ch)
+			} else {
+				current.WriteRune(ch)
+			}
 			escaped = false
 			continue
+
 		} else if ch == '\\' && mode == normalmode {
 			escaped = true
 			continue
