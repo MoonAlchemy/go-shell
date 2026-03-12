@@ -115,7 +115,7 @@ func parseArgs(input string) []string {
 			if mode == doublemode && (ch == '\\' || ch == '"') {
 				current.WriteRune(ch)
 			} else if mode == doublemode {
-				current.WriteRune('\\')
+				current.WriteRune('\')
 				current.WriteRune(ch)
 			} else {
 				current.WriteRune(ch)
